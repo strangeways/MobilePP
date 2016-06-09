@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pedalpalooza 2016</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript" src="include/jquery.xdomainajax.js"></script>
+<script type="text/javascript">
+  function clickdate(date, dateid)
+  {
+    var id = "#"+dateid;
+
+    $(id).toggle();
+    if ($(id).is(":visible") && $(id).is(":empty")) {
+      $.ajax({
+        url: 'http://www.shift2bikes.org/cal/mobilepp.php?date='+date+'&id='+dateid,
+        type: 'GET',
+        datatype: 'html',
+        success: function(res) {
+          var dateevents = $(res.responseText).filter(".event");
+          $(id).html(dateevents);
+          $(id+" .detail").hide();
+        }
+      });
+    }
+
+    return false;
+  }
+
+  function clickevent(eventid) {
+    $("#"+eventid).toggle();
+    return false;
+  }
+
+  function loadPPEvents() {
+    $("#results").html("");
+
+    $.ajax({
+      url: 'http://www.shift2bikes.org/cal/mobilepp.php',
+      type: 'GET',
+      datatype: 'html',
+      success: function(res) {
+        var days = $(res.responseText).filter("div.date");
+        $("#results").html(days);
+
+        $(".detail").hide();
+        $(".dateevents").hide();
+      }
+    });
+
+    return false;
+  }
+
+  function expandAllDays() {
+    $(".dateevents").show();
+    $(".detail").show();
+    return false;
+  }
+
+  function collapseAllDays() {
+    $(".detail").hide();
+    $(".dateevents").hide();
+    return false;
+  }
+
+  $(function () {
+    loadPPEvents();
+  });
+</script>
+<style>
+  h1 {
+    font-size: x-large;
+  }
+  div.date {
+    display: block;
+    margin: 0.5em 0;
+    border: 1px solid #6B4102;
+    white-space: normal;
+  }
+  a.date {
+    display: block;
+    padding: 0.5em;
+    background: url(images/oocorner.gif) no-repeat;
+    background-color: #ffc969;
+    text-decoration: none;
+  }
+  .clipped {
+    display: block;
+    font-size: larger;
+  }
+  .dateevents {
+    margin: 0.5em;
+  }
+  div.event {
+    margin-bottom: 0.5em;
+    border: 1px solid orange;
+    border-width: 1px 2px;
+  }
+  a.timetitle {
+    display: block;
+    padding: 0.5em;
+    background-color: #fee3b1;
+    font-size: large;
+  }
+  .detail {
+    padding: 0.5em 0 0.5em 1em;
+    border-top: 1px solid orange;
+  }
+</style>
+</head>
+<body>
+
+  <!-- <h1>Pedalpalooza 2016</h1> -->
+
+  <div id="results"></div>
+
+</body>
+</html>
