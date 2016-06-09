@@ -17,7 +17,9 @@
   <link rel="icon" type="image/png" href="/icons/favicon-16x16.png" sizes="16x16">
   <link rel="manifest" href="/manifest.json">
   <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="MobilePP">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="application-name" content="MobilePP">
   <meta name="msapplication-TileColor" content="#87ceeb">
   <meta name="msapplication-TileImage" content="/icons/mstile-144x144.png">
@@ -25,8 +27,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script type="text/javascript" src="include/jquery.xdomainajax.js"></script>
 <script type="text/javascript">
-  function clickdate(date, dateid)
-  {
+  function clickdate(date, dateid) {
     var id = "#"+dateid;
 
     $(id).toggle();
