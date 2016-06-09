@@ -61,7 +61,9 @@
       type: 'GET',
       datatype: 'html',
       success: function(res) {
-        var days = $(res.responseText).filter("div.date");
+        var days = $(res.responseText).filter(function () {
+          return $(this).attr("class") === "today" || $(this).attr("class") === "date";
+        });
         $("#results").html(days);
 
         $(".detail").hide();
@@ -92,6 +94,7 @@
   h1 {
     font-size: x-large;
   }
+  div.today,
   div.date {
     display: block;
     margin: 0.5em 0;
