@@ -33,8 +33,9 @@
 
     $(id).toggle();
     if ($(id).is(":visible") && $(id).is(":empty")) {
+      // Append date to query to prevent caching.
       $.ajax({
-        url: 'http://www.shift2bikes.org/cal/mobilepp.php?date='+date+'&id='+dateid,
+        url: 'http://www.shift2bikes.org/cal/mobilepp.php?date='+date+'&id='+dateid+'&'+Date.now(),
         type: 'GET',
         datatype: 'html',
         success: function(res) {
@@ -57,7 +58,8 @@
     $("#results").html("");
 
     $.ajax({
-      url: 'http://www.shift2bikes.org/cal/mobilepp.php',
+      // Append date to query to prevent caching.
+      url: 'http://www.shift2bikes.org/cal/mobilepp.php?'+Date.now(),
       type: 'GET',
       datatype: 'html',
       success: function(res) {
