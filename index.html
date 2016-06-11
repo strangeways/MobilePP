@@ -94,8 +94,52 @@
   });
 </script>
 <style>
+  body {
+    margin: 0;
+  }
   h1 {
-    font-size: x-large;
+    background-color: #228B22;
+    margin: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-size: small;
+    color: white;
+  }
+  ul.buttons {
+    text-align: center;
+    padding-left: 0;
+    list-style-type: none;
+    margin: 0.75em;
+  }
+  .buttons li {
+    display: inline-block;
+    margin: 0 0.5em;
+    font-size: small;
+  }
+  .buttons a {
+    background: orange;
+    background-image: -webkit-linear-gradient(top, #ffc969, orange);
+    background-image: -moz-linear-gradient(top, #ffc969, orange);
+    background-image: -ms-linear-gradient(top, #ffc969, orange);
+    background-image: -o-linear-gradient(top, #ffc969, orange);
+    background-image: linear-gradient(to bottom, #fee3b1, #ffc969);
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 3px;
+    padding: 5px 10px;
+    text-decoration: none;
+  }
+  .buttons a:hover {
+    background: orange;
+    background-image: -webkit-linear-gradient(top, orange, orange);
+    background-image: -moz-linear-gradient(top, orange, orange);
+    background-image: -ms-linear-gradient(top, orange, orange);
+    background-image: -o-linear-gradient(top, orange, orange);
+    background-image: linear-gradient(to bottom, orange, orange);
+    text-decoration: none;
+  }
+  #results {
+    margin: 8px;
   }
   div.today,
   div.date {
@@ -137,7 +181,13 @@
 </head>
 <body>
 
-  <!-- <h1>Pedalpalooza 2016</h1> -->
+  <h1>Pedalpalooza 2016</h1>
+
+  <ul class="buttons">
+    <li><a href="#" onclick="return loadPPEvents()">reload events</a></li>
+    <li><a href="http://www.shift2bikes.org/cal/viewpp2016.php">Shift2Bikes</a></li>
+    <li><a href="https://github.com/strangeways/MobilePP">GitHub</a></li>
+  </ul>
 
   <div id="results"></div>
 
