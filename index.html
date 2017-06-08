@@ -26,24 +26,35 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script type="text/javascript" src="/includes/jquery.xdomainajax.js"></script>
 <script type="text/javascript">
+  // Cross-origin requests handled via CORS Anywhere:
+  // https://github.com/Rob--W/cors-anywhere/
+
   function clickdate(date, dateid) {
     var id = "#"+dateid;
 
     $(id).toggle();
-    if ($(id).is(":visible") && $(id).is(":empty")) {
+    if ($(id).is(":visible") && ($(id).is(":empty") || !$(id).attr('loaded'))) {
+      $(id).html('<img src="images/spinner.gif" /> Loading...');
+
       // Append date to query to prevent caching.
+      var url = 'http://www.shift2bikes.org/cal/mobilepp.php?date='+date+'&id='+dateid+'&'+Date.now();
+
       $.ajax({
-        url: 'http://www.shift2bikes.org/cal/mobilepp.php?date='+date+'&id='+dateid+'&'+Date.now(),
+        url: 'https://cors-anywhere.herokuapp.com/' + url,
         type: 'GET',
-        datatype: 'html',
+        dataType: 'html',
         success: function(res) {
-          var dateevents = $(res.responseText).filter(".event");
+          var contents = "<html><body>" + res + "</body></html>";
+          var dateevents = $(contents).filter(".event");
           $(id).html(dateevents);
           $(id+" .detail").hide();
+          $(id).attr("loaded", 1);
         }
-      });
+      })
+        .fail(function() {
+          $("#results").html('Unable to load events. Please try again.');
+        });
     }
 
     return false;
@@ -55,15 +66,17 @@
   }
 
   function loadPPEvents() {
-    $("#results").html("");
+    $("#results").html('<img src="images/spinner.gif" /> Loading...');
+
+    // Append date to query to prevent caching.
+    var url = 'http://www.shift2bikes.org/cal/mobilepp.php?'+Date.now();
 
     $.ajax({
-      // Append date to query to prevent caching.
-      url: 'http://www.shift2bikes.org/cal/mobilepp.php?'+Date.now(),
+      url: 'https://cors-anywhere.herokuapp.com/' + url,
       type: 'GET',
-      datatype: 'html',
+      dataType: 'html',
       success: function(res) {
-        var days = $(res.responseText).filter(function () {
+        var days = $(res).filter(function () {
           return $(this).attr("class") === "today" || $(this).attr("class") === "date";
         });
         $("#results").html(days);
@@ -74,7 +87,10 @@
         // Expand today's events and scroll to them.
         $(".today a.date").click()[0].scrollIntoView();
       }
-    });
+    })
+      .fail(function() {
+        $("#results").html('Unable to load calendar. Please try again.');
+      });
 
     return false;
   }
