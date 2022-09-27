@@ -4,7 +4,7 @@ Mobile-friendlier Pedalpalooza calendar
 
 http://pdxstuff.com/ (http://strangeways.github.io/MobilePP/)
 
-The official Pedalpalooza website is at http://www.shift2bikes.org/cal/viewpp2018.php
+The official Pedalpalooza calendar is at https://www.shift2bikes.org/calendar/
 
 **Note: Pedalpalooza has a new calendar, so these links no longer show any content.**
 
